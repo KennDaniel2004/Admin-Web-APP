@@ -1,0 +1,196 @@
+/* ============================================================
+   Dashboard/Register/Register.css
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", sans-serif; }
+body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: #f4f6f9; }
+
+/* ── TOPBAR ── */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; height: 56px; background: white;
+  border-bottom: 1px solid #e0e0e0; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.hamburger {
+  background: none; border: none; cursor: pointer; padding: 6px;
+  border-radius: 8px; display: flex; flex-direction: column; gap: 5px;
+  transition: background 0.2s; width: auto; margin-top: 0;
+}
+.hamburger:hover { background: #f0f0f0; }
+.hamburger:active { transform: none; }
+.hamburger span { display: block; width: 22px; height: 2px; background: #444; border-radius: 2px; transition: all 0.3s ease; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.topbar-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.topbar-logo { width: 32px; height: 32px; object-fit: contain; }
+.topbar-name { font-size: 16px; font-weight: 700; color: #1f3c88; }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.topbar-fullname { font-size: 14px; color: #555; font-weight: 500; }
+.topbar-avatar {
+  width: 36px; height: 36px; border-radius: 50%; background: #d0d0d0;
+  border: 2px solid #e0e0e0; display: flex; align-items: center;
+  justify-content: center; font-size: 13px; font-weight: 700; color: #555;
+}
+
+/* ── LAYOUT ── */
+.layout { display: flex; margin-top: 56px; height: calc(100vh - 56px); }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 200px; background: white; border-right: 1px solid #e8e8e8;
+  padding: 12px 0; display: flex; flex-direction: column; gap: 2px;
+  position: fixed; top: 56px; left: 0; bottom: 0; z-index: 90;
+  transform: translateX(-100%);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-overlay {
+  display: none; position: fixed; inset: 56px 0 0 0;
+  background: rgba(0,0,0,0.25); z-index: 89;
+}
+.sidebar-overlay.show { display: block; }
+.nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+  text-decoration: none; color: #444; font-size: 14px; font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.nav-item svg { width: 20px; height: 20px; flex-shrink: 0; stroke: currentColor; }
+.nav-item:hover { background: #f4faf4; color: #2e7d32; border-left-color: #a5d6a7; }
+.nav-item.active { background: #e8f5e9; color: #2e7d32; border-left-color: #2e7d32; font-weight: 600; }
+
+/* ── MAIN CONTENT ── */
+.main-content { flex: 1; overflow-y: auto; }
+
+@media (min-width: 768px) {
+  .sidebar { transform: translateX(0); }
+  .sidebar-overlay { display: none !important; }
+  .main-content { margin-left: 200px; }
+  .sidebar.force-closed { transform: translateX(-100%); }
+  .layout.sidebar-closed .main-content { margin-left: 0; }
+}
+
+/* ── CENTER WRAPPER ── */
+.center-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 56px);
+  padding: 20px;
+}
+
+/* ── REGISTER CARD — matches your mockup exactly ── */
+.register-card {
+  width: 340px;
+  background: white;
+  border-radius: 20px;
+  padding: 36px 30px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  border: 1px solid #f0f0f0;
+}
+
+.card-logo {
+  width: 72px; height: 72px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+  letter-spacing: 0.2px;
+}
+
+/* ── STATUS MESSAGE ── */
+.status-msg {
+  font-size: 13px; border-radius: 8px;
+  min-height: 4px; margin-bottom: 4px;
+  transition: all 0.3s ease;
+}
+.status-msg.success {
+  background: #e8f5e9; color: #2e7d32;
+  padding: 10px 14px; margin-bottom: 14px;
+}
+.status-msg.error {
+  background: #fdecea; color: #c0392b;
+  padding: 10px 14px; margin-bottom: 14px;
+}
+.status-msg.warning {
+  background: #fff8e1; color: #f57f17;
+  padding: 10px 14px; margin-bottom: 14px;
+}
+
+/* ── INPUT FIELD ── */
+.field-group {
+  margin-bottom: 24px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 44px 12px 18px;
+  border: 1.5px solid #b2dfb2;
+  border-radius: 25px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  height: 46px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: white;
+}
+
+.input-wrapper input:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.08);
+}
+
+.input-wrapper input::placeholder {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.input-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.input-icon svg {
+  width: 20px; height: 20px;
+  stroke: #aaa;
+}
+
+/* ── REGISTER BUTTON ── */
+button#registerBtn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 25px;
+  background: #00e826;
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.3px;
+  margin-top: 0;
+}
+button#registerBtn:hover  { background: #00c720; }
+button#registerBtn:active { transform: scale(0.98); }
+button#registerBtn:disabled { background: #ccc; cursor: not-allowed; color: #777; }

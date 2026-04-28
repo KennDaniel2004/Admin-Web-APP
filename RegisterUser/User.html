@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMB – Register Employee</title>
+  <link rel="stylesheet" href="User.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="../Home/Home.html" class="topbar-brand">
+      <img src="../../Image/logo.png" class="topbar-logo" alt="EMB Logo">
+      <span class="topbar-name">EMB</span>
+    </a>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-fullname" id="topbarFullname">Fullname</span>
+    <div class="topbar-avatar" id="topbarAvatar"></div>
+  </div>
+</header>
+
+<div class="layout" id="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <a href="../Dashboard/Home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+        <path d="M9 21V12h6v9"/>
+      </svg>
+      Home
+    </a>
+    <a href="../RegisterUser/User.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+      Register
+    </a>
+    <a href="../RegisteredID/Employee.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="5" width="20" height="14" rx="2"/>
+        <circle cx="8" cy="12" r="2"/>
+        <path d="M14 10h4M14 14h2"/>
+      </svg>
+      Registered ID
+    </a>
+  </nav>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="center-wrapper">
+      <div class="register-card">
+
+        <img src="../../Image/logo.png" class="card-logo" alt="EMB Logo">
+        <h2>Register Employee</h2>
+
+        <div id="statusMsg" class="status-msg"></div>
+
+        <!-- Employee ID input only — matches your mockup -->
+        <div class="field-group">
+          <div class="input-wrapper">
+            <input type="text" id="employeeId" placeholder="Employee ID" autocomplete="off">
+            <span class="input-icon">
+              <!-- slash-eye icon matching your mockup -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <button id="registerBtn" type="button">Register</button>
+
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script type="module" src="User.js"></script>
+</body>
+</html>

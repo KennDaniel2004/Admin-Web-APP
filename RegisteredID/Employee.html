@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMB – Registered ID</title>
+  <link rel="stylesheet" href="Employee.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="../Dashboard/Home.html" class="topbar-brand">
+      <img src="../../Image/logo.png" class="topbar-logo" alt="EMB Logo">
+      <span class="topbar-name">EMB</span>
+    </a>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-fullname" id="topbarFullname">Fullname</span>
+    <div class="topbar-avatar" id="topbarAvatar"></div>
+  </div>
+</header>
+
+<div class="layout" id="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <a href="../Dashboard/Home.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+        <path d="M9 21V12h6v9"/>
+      </svg>
+      Home
+    </a>
+    <a href="../RegisterUser/User.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+      Register
+    </a>
+    <a href="../RegisteredID/Employee.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="5" width="20" height="14" rx="2"/>
+        <circle cx="8" cy="12" r="2"/>
+        <path d="M14 10h4M14 14h2"/>
+      </svg>
+      Registered ID
+    </a>
+  </nav>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="page-container">
+
+      <div class="page-header">
+        <h1 class="page-title">Registered ID</h1>
+        <button id="refreshBtn" class="refresh-btn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+          </svg>
+          Refresh
+        </button>
+      </div>
+
+      <!-- Summary counts -->
+      <div class="summary-row">
+        <div class="summary-card completed-card">
+          <span class="summary-count" id="completedCount">0</span>
+          <span class="summary-label">Completed</span>
+        </div>
+        <div class="summary-card pending-card">
+          <span class="summary-count" id="pendingCount">0</span>
+          <span class="summary-label">Pending</span>
+        </div>
+        <div class="summary-card total-card">
+          <span class="summary-count" id="totalCount">0</span>
+          <span class="summary-label">Total</span>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search by name, ID, position…">
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" id="tabCompleted" type="button">
+          ✅ Completed <span class="tab-badge" id="badgeCompleted">0</span>
+        </button>
+        <button class="tab" id="tabPending" type="button">
+          ⏳ Pending <span class="tab-badge pending-badge" id="badgePending">0</span>
+        </button>
+      </div>
+
+      <!-- Completed tab content -->
+      <div id="completedPanel" class="tab-panel">
+        <div id="completedGrid" class="employee-grid">
+          <p class="loading-text" id="loadingCompleted">Loading…</p>
+        </div>
+      </div>
+
+      <!-- Pending tab content -->
+      <div id="pendingPanel" class="tab-panel hidden">
+        <div id="pendingGrid" class="pending-list">
+          <p class="loading-text" id="loadingPending">Loading…</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script type="module" src="Employee.js"></script>
+</body>
+</html>

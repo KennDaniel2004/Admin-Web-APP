@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMB – Register</title>
+  <link rel="stylesheet" href="../Login/Login.css">
+  <link rel="stylesheet" href="Register.css">
+</head>
+
+<body>
+
+
+<header>
+  <div class="emb-top">
+    Republic of the Philippines | Department of Environment and Natural Resources
+  </div>
+
+  <div class="emb-main">
+    <div class="emb-brand">
+      <img src="../Image/logo.png" class="emb-logo" alt="EMB Logo">
+      <div class="emb-text">
+        <div class="t1">Republic of the Philippines</div>
+        <div class="t1">Department of Environment and Natural Resources</div>
+        <div class="t2">ENVIRONMENTAL MANAGEMENT BUREAU</div>
+        <div class="t3">Western Visayas</div>
+      </div>
+    </div>
+
+    <nav class="emb-nav">
+      <a href="../Login/Login.html">Login</a>
+      <a href="../Register/Register.html" class="active">Register</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     REGISTER CARD
+══════════════════════════════════════════════════════════ -->
+<div class="container">
+  <div class="login-card register-card">
+
+    <img src="../Image/logo.png" class="card-logo" alt="Logo">
+    <h2>Register</h2>
+
+    <div id="statusMsg" class="status-msg"></div>
+
+    <!-- STEP 1: Basic info -->
+    <label>First name</label>
+    <input type="text" id="firstName" placeholder="Enter first name">
+
+    <label>Last name</label>
+    <input type="text" id="lastName" placeholder="Enter last name">
+
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Choose a username">
+
+    <!-- ── AUTH CODE POPUP (appears after username loses focus) ── -->
+    <div id="authPopup" class="auth-popup hidden">
+      <p class="auth-title">AUTHENTICATION CODE REQUIRED</p>
+      <input type="text" id="authCode" placeholder="Enter code" maxlength="10">
+      <button id="verifyBtn" type="button">Verify</button>
+      <p id="authError" class="auth-error"></p>
+    </div>
+
+    <!-- STEP 2: Passwords (always visible, Register button locked until verified) -->
+    <label>Password</label>
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="Create password">
+      <span class="eye" id="togglePwd1">
+        <svg id="eyeIcon1" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24" width="22" height="22"
+             fill="none" stroke="currentColor" stroke-width="2"></svg>
+      </span>
+    </div>
+
+    <label>Confirm Password</label>
+    <div class="password-wrapper">
+      <input type="password" id="confirmPassword" placeholder="Repeat password">
+      <span class="eye" id="togglePwd2">
+        <svg id="eyeIcon2" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24" width="22" height="22"
+             fill="none" stroke="currentColor" stroke-width="2"></svg>
+      </span>
+    </div>
+
+    <button id="registerBtn" type="button" disabled>Register</button>
+
+    <p class="register-link">
+      Already have an account? <a href="../Login/Login.html">Login here</a>
+    </p>
+
+  </div>
+</div>
+
+<script type="module" src="Register.js"></script>
+</body>
+</html>
