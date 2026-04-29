@@ -2,8 +2,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ⚠️  Replace ALL values below with your real Firebase project credentials:
-//     Firebase Console → Project Settings → Your Apps → SDK setup & configuration
 const firebaseConfig = {
   apiKey:            "AIzaSyC_xdeJHhtH8zRfUg_febv3a0PrplWqBsw",
   authDomain:        "embr6database.firebaseapp.com",
