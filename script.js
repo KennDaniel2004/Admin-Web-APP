@@ -13,7 +13,7 @@
 import { db } from "./DatabaseConnection/firebase-config.js";
 import {
   doc, getDoc, setDoc, deleteDoc,
-  collection, getDocs,
+  collection, getDocs, onSnapshot,
   serverTimestamp, Timestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -45,7 +45,8 @@ function showPanel(panelId) {
   });
 
   // Load data when switching to RegisteredID panel
-  if (panelId === "panel-registered-id") loadRegisteredUsers();
+  // Only start listener if not already running
+  if (panelId === "panel-registered-id" && !ridUnsubscribe) loadRegisteredUsers();
 }
 
 // ── Wire up all data-goto and data-panel links ────────────
@@ -120,7 +121,11 @@ loginBtn?.addEventListener("click", async () => {
 
     if (un === userSnap.data().value && pw === passSnap.data().value) {
       setStatus(loginStatus, "Login successful! Loading dashboard…", "success");
-      setTimeout(() => { showDashboard("panel-home"); loadFullname(); }, 1200);
+      setTimeout(() => {
+        showDashboard("panel-home");
+        loadFullname();
+        loadRegisteredUsers(); // ← start real-time listener immediately on login
+      }, 1200);
     } else {
       setStatus(loginStatus, "Incorrect username or password.", "error");
     }
@@ -406,40 +411,97 @@ function applyRidSearch(term) {
   }
 }
 
-async function loadRegisteredUsers() {
+// ── Real-time listener handle (so we can detach it if needed) ──
+let ridUnsubscribe = null;
+
+function loadRegisteredUsers() {
+  // Show loading state
   if (completedGrid) completedGrid.innerHTML = `<p class="loading-text">Loading…</p>`;
   if (pendingList)   pendingList.innerHTML   = `<p class="loading-text">Loading…</p>`;
 
-  try {
-    const snap = await getDocs(collection(db, "Registered_User"));
-    allCompleted = [];
-    allPending   = [];
+  // Detach any existing listener before starting a new one
+  if (ridUnsubscribe) { ridUnsubscribe(); ridUnsubscribe = null; }
 
-    snap.forEach(s => {
-      const data = { id: s.id, ...s.data() };
-      data.First_Name ? allCompleted.push(data) : allPending.push(data);
-    });
+  // onSnapshot fires immediately with current data,
+  // then again every time ANY document in Registered_User changes,
+  // is added, or is deleted — no refresh needed.
+  ridUnsubscribe = onSnapshot(
+    collection(db, "Registered_User"),
+    (snap) => {
+      allCompleted = [];
+      allPending   = [];
 
-    allCompleted.sort((a,b) => (a.First_Name||"").localeCompare(b.First_Name||""));
-    allPending.sort((a,b) => {
-      const ta = a.registeredAt?.toDate?.() || new Date(0);
-      const tb = b.registeredAt?.toDate?.() || new Date(0);
-      return tb - ta;
-    });
+      snap.forEach(s => {
+        const data = { id: s.id, ...s.data() };
 
-    const total = allCompleted.length + allPending.length;
-    document.getElementById("rid-completed-count").textContent = allCompleted.length;
-    document.getElementById("rid-pending-count").textContent   = allPending.length;
-    document.getElementById("rid-total-count").textContent     = total;
-    document.getElementById("badge-completed").textContent     = allCompleted.length;
-    document.getElementById("badge-pending").textContent       = allPending.length;
+        // ── Determine if this doc is COMPLETED or PENDING ──────
+        //
+        // COMPLETED: mobile app has synced full info.
+        //   Mobile app (UserDaoImpl) saves these fields to Firestore:
+        //   First_Name, Last_Name, Middle_Name, Position, Username
+        //
+        // PENDING: admin pre-registered only the ID via web app.
+        //   Web app saves: { UserID, status:"pending", registeredAt }
+        //   No First_Name yet.
+        //
+        // We check First_Name as the definitive "completed" marker.
+        // We also accept Employee_Id field (mobile uses Employee_Id
+        // as the document key via SyncManager).
 
-    applyRidSearch(ridSearch?.value || "");
-  } catch (err) {
-    console.error(err);
-    if (completedGrid) completedGrid.innerHTML = `<p class="no-results">Failed to load. Check your connection.</p>`;
-    if (pendingList)   pendingList.innerHTML   = `<p class="no-results">Failed to load. Check your connection.</p>`;
-  }
+        const isCompleted = !!(
+          data.First_Name  ||   // mobile app field
+          data.firstName        // fallback camelCase
+        );
+
+        if (isCompleted) {
+          // Normalise field names so renderCompleted always works
+          // regardless of whether mobile used snake_case or camelCase
+          allCompleted.push({
+            ...data,
+            First_Name  : data.First_Name  || data.firstName  || "",
+            Last_Name   : data.Last_Name   || data.lastName   || "",
+            Middle_Name : data.Middle_Name || data.middleName || "",
+            Position    : data.Position    || data.position   || "",
+            Username    : data.Username    || data.username   || "",
+            UserID      : data.UserID      || data.Employee_Id || data.employeeId || s.id,
+          });
+        } else {
+          allPending.push({
+            ...data,
+            UserID: data.UserID || data.Employee_Id || data.employeeId || s.id,
+          });
+        }
+      });
+
+      // Sort completed A→Z by first name
+      allCompleted.sort((a, b) =>
+        (a.First_Name || "").localeCompare(b.First_Name || "")
+      );
+
+      // Sort pending newest first
+      allPending.sort((a, b) => {
+        const ta = a.registeredAt?.toDate?.() || new Date(0);
+        const tb = b.registeredAt?.toDate?.() || new Date(0);
+        return tb - ta;
+      });
+
+      // Update summary counts
+      const total = allCompleted.length + allPending.length;
+      document.getElementById("rid-completed-count").textContent = allCompleted.length;
+      document.getElementById("rid-pending-count").textContent   = allPending.length;
+      document.getElementById("rid-total-count").textContent     = total;
+      document.getElementById("badge-completed").textContent     = allCompleted.length;
+      document.getElementById("badge-pending").textContent       = allPending.length;
+
+      // Re-render current tab with current search term
+      applyRidSearch(ridSearch?.value || "");
+    },
+    (err) => {
+      console.error("Real-time listener error:", err);
+      if (completedGrid) completedGrid.innerHTML = `<p class="no-results">Failed to load. Check your connection.</p>`;
+      if (pendingList)   pendingList.innerHTML   = `<p class="no-results">Failed to load. Check your connection.</p>`;
+    }
+  );
 }
 
 function renderCompleted(users) {
