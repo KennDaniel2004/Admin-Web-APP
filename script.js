@@ -1,15 +1,3 @@
-// ============================================================
-//  script.js — All logic for the EMB Web App
-//
-//  PAGES / PANELS:
-//    page-login           → Login
-//    page-admin-register  → Admin Register (with auth code)
-//    dashboard-shell      → Dashboard wrapper
-//      panel-home         → Home hero
-//      panel-emp-register → Register Employee ID
-//      panel-registered-id→ View all registered IDs (completed + pending)
-// ============================================================
-
 import { db } from "./DatabaseConnection/firebase-config.js";
 import {
   doc, getDoc, setDoc, deleteDoc,
@@ -17,9 +5,7 @@ import {
   serverTimestamp, Timestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ══════════════════════════════════════════════════════════
-//  ROUTER — show/hide pages and panels
-// ══════════════════════════════════════════════════════════
+
 const pages = ["page-login", "page-admin-register"];
 
 function showPage(pageId) {
@@ -50,6 +36,8 @@ function showPanel(panelId) {
 }
 
 // ── Wire up all data-goto and data-panel links ────────────
+
+
 document.addEventListener("click", e => {
   const gotoEl  = e.target.closest("[data-goto]");
   const panelEl = e.target.closest("[data-panel]");
@@ -67,9 +55,9 @@ document.addEventListener("click", e => {
   }
 });
 
-// ══════════════════════════════════════════════════════════
+
 //  EYE ICON HELPERS
-// ══════════════════════════════════════════════════════════
+
 const eyeOffPath = `
   <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/>
   <circle cx="12" cy="12" r="3"/>
@@ -91,9 +79,9 @@ function initEye(eyeSpanId, iconId, inputId) {
   });
 }
 
-// ══════════════════════════════════════════════════════════
+
 //  LOGIN
-// ══════════════════════════════════════════════════════════
+
 initEye("login-eye", "login-eye-icon", "login-password");
 
 const loginBtn      = document.getElementById("login-btn");
@@ -141,9 +129,9 @@ loginBtn?.addEventListener("click", async () => {
 document.getElementById("login-username")?.addEventListener("keydown", e => { if (e.key === "Enter") loginBtn?.click(); });
 document.getElementById("login-password")?.addEventListener("keydown", e => { if (e.key === "Enter") loginBtn?.click(); });
 
-// ══════════════════════════════════════════════════════════
+
 //  ADMIN REGISTER
-// ══════════════════════════════════════════════════════════
+
 initEye("areg-eye1", "areg-eye-icon1", "areg-password");
 initEye("areg-eye2", "areg-eye-icon2", "areg-confirm");
 
@@ -278,9 +266,9 @@ aregBtn?.addEventListener("click", async () => {
   }
 });
 
-// ══════════════════════════════════════════════════════════
+
 //  DASHBOARD — SIDEBAR TOGGLE
-// ══════════════════════════════════════════════════════════
+
 const hamburger      = document.getElementById("hamburger");
 const sidebar        = document.getElementById("sidebar");
 const sidebarOverlay = document.getElementById("sidebar-overlay");
@@ -305,9 +293,9 @@ window.addEventListener("resize", () => {
   if (window.innerWidth >= 768) sidebarOverlay?.classList.remove("show");
 });
 
-// ══════════════════════════════════════════════════════════
+
 //  DASHBOARD — LOAD FULLNAME
-// ══════════════════════════════════════════════════════════
+
 async function loadFullname() {
   try {
     const snap = await getDoc(doc(db, "Admin", "RegisteredEmployee"));
@@ -322,9 +310,9 @@ async function loadFullname() {
   } catch (err) { console.error(err); }
 }
 
-// ══════════════════════════════════════════════════════════
+
 //  EMPLOYEE REGISTER PANEL
-// ══════════════════════════════════════════════════════════
+
 const empregBtn    = document.getElementById("empreg-btn");
 const empregStatus = document.getElementById("empreg-status");
 const empregInput  = document.getElementById("empreg-id");
