@@ -8,6 +8,9 @@
 </head>
 <body>
 
+
+
+
 <!-- LOGIN PAGE -->
 
 
@@ -35,6 +38,8 @@
 
   
 
+
+
   <div class="pub-container">
     <div class="card">
       <img src="logo.png" class="card-logo" alt="Logo">
@@ -55,7 +60,11 @@
   </div>
 </div>
 
+
+
+
 <!-- REGISTER PAGE -->
+
 <div id="page-admin-register" class="page hidden">
   <header class="pub-header">
     <div class="pub-top">
@@ -78,6 +87,9 @@
     </div>
   </header>
 
+
+
+
   <div class="pub-container">
     <div class="card register-card">
       <img src="logo.png" class="card-logo" alt="Logo">
@@ -91,7 +103,14 @@
       <label>Username</label>
       <input type="text" id="areg-username" placeholder="Choose a username">
 
+
+
+
+
       <!-- Auth popup -->
+
+
+
       <div id="areg-auth-popup" class="auth-popup hidden">
         <p class="auth-title">AUTHENTICATION CODE REQUIRED</p>
         <input type="text" id="areg-auth-code" placeholder="Enter 6-digit code" maxlength="10">
@@ -120,7 +139,19 @@
   </div>
 </div>
 
+
+
+
+
+<!-- END AUTH -->
+
+
+
 <!-- DASHBOARD -->
+
+
+
+
 <div id="dashboard-shell" class="hidden">
   <header class="topbar">
     <div class="topbar-left">
@@ -140,6 +171,7 @@
       </div>
     </div>
   </header>
+
 
   <div class="dash-layout" id="dash-layout">
     <nav class="sidebar" id="sidebar">
@@ -169,7 +201,13 @@
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <main class="dash-main" id="dash-main">
+
+
+
       <!-- Panel Home -->
+
+
+
       <div id="panel-home" class="panel">
         <div class="home-hero">
           <div class="home-overlay"></div>
@@ -185,7 +223,14 @@
         </div>
       </div>
 
+
+
+
       <!-- Panel Employee Register -->
+
+
+
+
       <div id="panel-emp-register" class="panel hidden">
         <div class="inner-page">
           <div class="center-wrapper">
@@ -194,14 +239,10 @@
               <h2>Register Employee</h2>
               <div id="empreg-status" class="status-msg"></div>
               <div class="field-group">
-                <div class="input-wrapper">
-                  <input type="text" id="empreg-id" placeholder="Employee ID" autocomplete="off">
-                  <span class="input-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
-                      <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
-                      <line x1="1" y1="1" x2="23" y2="23"/>
-                    </svg>
+                <div class="input-wrapper pw-wrap">
+                  <input type="password" id="empreg-id" placeholder="Employee ID" autocomplete="off">
+                  <span class="eye" id="empreg-eye">
+                    <svg id="empreg-eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
                   </span>
                 </div>
               </div>
@@ -211,7 +252,15 @@
         </div>
       </div>
 
+
+
+
+
       <!-- Panel Registered ID -->
+
+
+
+
       <div id="panel-registered-id" class="panel hidden">
         <div class="inner-page">
           <div class="page-header">
@@ -265,7 +314,13 @@
   </div>
 </div>
 
+
+
+
 <!-- Logout Confirmation Modal -->
+
+
+
 <div id="logout-modal" class="modal hidden">
   <div class="modal-overlay"></div>
   <div class="modal-container">

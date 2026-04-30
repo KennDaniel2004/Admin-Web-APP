@@ -490,10 +490,12 @@ button:disabled {
   text-decoration: none;
 }
 
+/* Logo in Dashboard Header */
 .topbar-logo {
   width: 32px;
   height: 32px;
   object-fit: contain;
+  display: inline-block;
 }
 
 .topbar-name {
@@ -691,11 +693,49 @@ button:disabled {
   gap: 20px;
 }
 
+/* Home page logo horizontal animation */
 .home-logo {
   width: 110px;
   height: 110px;
   object-fit: contain;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+  transition: transform 0.5s ease-in-out;
+  animation: homeLogoHorizontalFlip 5s ease-in-out infinite;
+}
+
+@keyframes homeLogoHorizontalFlip {
+  0% {
+    transform: rotateY(0deg) translateX(0px);
+  }
+  25% {
+    transform: rotateY(180deg) translateX(-5px);
+  }
+  50% {
+    transform: rotateY(360deg) translateX(0px);
+  }
+  75% {
+    transform: rotateY(540deg) translateX(5px);
+  }
+  100% {
+    transform: rotateY(720deg) translateX(0px);
+  }
+}
+
+.home-logo:hover {
+  animation: homeLogoHorizontalHover 0.6s ease-in-out;
+  cursor: pointer;
+}
+
+@keyframes homeLogoHorizontalHover {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.15);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
 }
 
 .home-info-card {

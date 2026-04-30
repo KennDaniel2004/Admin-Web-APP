@@ -73,6 +73,7 @@ function initEye(eyeSpanId, iconId, inputId) {
 initEye("login-eye", "login-eye-icon", "login-password");
 initEye("areg-eye1", "areg-eye-icon1", "areg-password");
 initEye("areg-eye2", "areg-eye-icon2", "areg-confirm");
+initEye("empreg-eye", "empreg-eye-icon", "empreg-id");
 
 // LOGIN
 const loginBtn = document.getElementById("login-btn");
